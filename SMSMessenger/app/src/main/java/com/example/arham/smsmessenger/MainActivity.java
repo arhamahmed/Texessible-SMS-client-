@@ -6,6 +6,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.JsonReader;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.telephony.SmsManager;
@@ -23,15 +24,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
-import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
-import com.android.volley.RequestQueue;
-
-import javax.net.ssl.HttpsURLConnection;
-
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONStringer;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -95,13 +94,35 @@ public class MainActivity extends ActionBarActivity {
 
         // Start the queue
         queue.start();
+        /*JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener() {
 
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        txtphoneNo.setText("Response: " + response.toString());
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+
+                    }
+                });*/
         // Formulate the request and handle the response.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        int index = response.indexOf("formatted_address")+22;
+                        int index2 = response.substring(index).indexOf("\"");
+
+                        //JSONObject json = new JSONObject((JSONStringer) response);
+                        //txtphoneNo.setText(""+json.getString("formatted_address"));
+
                         txtMessage.setText(""+response);
+
+                        //txtphoneNo.setText(index + " " + index2);
                     }
                 },
                 new Response.ErrorListener() {
