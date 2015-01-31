@@ -29,6 +29,11 @@ public class MainActivity extends ActionBarActivity {
         sendBtn = (Button) findViewById(R.id.btnSendSMS);
         txtphoneNo = (EditText) findViewById(R.id.editTextPhoneNo);
         txtMessage = (EditText) findViewById(R.id.editTextSMS);
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                sendSMSMessage();
+            }
+        });
     }
 
     protected void sendSMSMessage() {
