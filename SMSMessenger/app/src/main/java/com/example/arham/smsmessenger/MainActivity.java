@@ -94,7 +94,7 @@ public class MainActivity extends ActionBarActivity {
 
         // Start the queue
         queue.start();
-        /*JsonObjectRequest jsObjRequest = new JsonObjectRequest
+        /*JsonObjectRequest stringRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener() {
 
                     @Override
@@ -114,15 +114,10 @@ public class MainActivity extends ActionBarActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        int index = response.indexOf("formatted_address")+22;
-                        int index2 = response.substring(index).indexOf("\"");
+                        String[] x = response.split(",");
 
-                        //JSONObject json = new JSONObject((JSONStringer) response);
-                        //txtphoneNo.setText(""+json.getString("formatted_address"));
-
-                        txtMessage.setText(""+response);
-
-                        //txtphoneNo.setText(index + " " + index2);
+                        String address = x[37]+x[38]+x[39]+x[40]+x[41];
+                        txtphoneNo.setText(""+address.substring(31));
                     }
                 },
                 new Response.ErrorListener() {
