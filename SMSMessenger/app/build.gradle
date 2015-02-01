@@ -23,4 +23,10 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile project(':volley')
+    repositories {
+        maven {
+            url '/libs/myorepository'
+        }
+    }
+    compile('com.thalmic:myosdk:0.10.+@aar')
 }

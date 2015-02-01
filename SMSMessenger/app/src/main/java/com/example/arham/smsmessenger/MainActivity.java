@@ -1,6 +1,7 @@
 package com.example.arham.smsmessenger;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -25,12 +26,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONStringer;
+import com.thalmic.myo.AbstractDeviceListener;
+import com.thalmic.myo.DeviceListener;
+import com.thalmic.myo.Hub;
+import com.thalmic.myo.Myo;
+import com.thalmic.myo.Pose;
+import com.thalmic.myo.scanner.ScanActivity;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -38,7 +40,64 @@ public class MainActivity extends ActionBarActivity {
     EditText txtphoneNo;
     EditText txtMessage;
     RequestQueue queue;
+    private  Toast toast;
+    boolean volumeMode = false;
+    public Hub hub;
 
+    private DeviceListener mListener = new AbstractDeviceListener() {
+        @Override
+        public void onConnect(Myo myo, long timestamp) {
+            showToast("Connected");
+        }
+
+        @Override
+        public void onDisconnect(Myo myo, long timestamp) {
+            showToast("Disconnected");
+        }
+
+        // onPose() is called whenever the Myo detects that the person wearing it has changed their pose, for example,
+        // making a fist, or not making a fist anymore.
+        @Override
+        public void onPose(Myo myo, long timestamp, Pose pose) {
+            // Handle the cases of the Pose enumeration, and change the text of the text view
+            // based on the pose we receive.
+            switch (pose) {
+                case UNKNOWN:
+                    volumeMode = false;
+                    showToast("Unknown");
+                    break;
+                case REST:
+                case DOUBLE_TAP:
+                    volumeMode = false;
+                    showToast("Double Tap");
+                    break;
+                case FIST:
+                    volumeMode = true;
+                    showToast("Fist");
+                    break;
+                case WAVE_OUT:
+                    volumeMode = false;
+                    showToast("Wave Out");
+                    break;
+                case FINGERS_SPREAD:
+                    volumeMode = false;
+                    showToast("Spread Fingers");
+                    break;
+            }
+            if (pose != Pose.UNKNOWN && pose != Pose.REST) {
+                // Tell the Myo to stay unlocked until told otherwise. We do that here so you can
+                // hold the poses without the Myo becoming locked.
+                myo.unlock(Myo.UnlockType.HOLD);
+                // Notify the Myo that the pose has resulted in an action, in this case changing
+                // the text on the screen. The Myo will vibrate.
+                myo.notifyUserAction();
+            } else {
+                // Tell the Myo to stay unlocked only for a short period. This allows the Myo to
+                // stay unlocked while poses are being performed, but lock after inactivity.
+                myo.unlock(Myo.UnlockType.TIMED);
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,20 +124,31 @@ public class MainActivity extends ActionBarActivity {
                 double longitude = location.getLongitude();
 
                 String url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
-                 latitude+","+longitude+"&key="+"AIzaSyD_65i2dXl-bgq4Ei9ARkxTwg793I7_DV8";
+                        latitude + "," + longitude + "&key=" + "AIzaSyD_65i2dXl-bgq4Ei9ARkxTwg793I7_DV8";
 
                 decodeCoordinates(url);
             }
 
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
 
-            public void onProviderEnabled(String provider) {}
+            public void onProviderEnabled(String provider) {
+            }
 
-            public void onProviderDisabled(String provider) {}
+            public void onProviderDisabled(String provider) {
+            }
         };
 
         // Register the listener with the Location Manager to receive location updates
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+
+        Hub hub = Hub.getInstance();
+        if (!hub.init(this)) {
+            Log.e("Hub Error: ", "Could not initialize the Hub.");
+            finish();
+            return;
+        }
+        Hub.getInstance().attachToAdjacentMyo();
     }
 
     public void decodeCoordinates(String url)
@@ -94,22 +164,6 @@ public class MainActivity extends ActionBarActivity {
 
         // Start the queue
         queue.start();
-        /*JsonObjectRequest stringRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        txtphoneNo.setText("Response: " + response.toString());
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
-
-                    }
-                });*/
-        // Formulate the request and handle the response.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -129,6 +183,15 @@ public class MainActivity extends ActionBarActivity {
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
+    }
+
+    private void showToast(String text) {
+        if (toast == null) {
+            toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
+        } else {
+            toast.setText(text);
+        }
+        toast.show();
     }
 
     protected void sendSMSMessage() {
@@ -154,6 +217,10 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem myoConnect = menu.findItem(R.id.myo_connect);
+        Intent intent = new Intent(this, ScanActivity.class);
+        myoConnect.setIntent(intent);
         return true;
     }
 
