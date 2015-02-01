@@ -7,7 +7,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.JsonReader;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.telephony.SmsManager;
@@ -34,6 +33,21 @@ import com.thalmic.myo.Myo;
 import com.thalmic.myo.Pose;
 import com.thalmic.myo.scanner.ScanActivity;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Serializable;
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class MainActivity extends ActionBarActivity {
 
     Button sendBtn;
@@ -43,6 +57,18 @@ public class MainActivity extends ActionBarActivity {
     private  Toast toast;
     boolean volumeMode = false;
     public Hub hub;
+
+    EditText etName;
+    EditText etEmail;
+    EditText etUser;
+    EditText etPass;
+
+    String username ="";
+    String pass = "";
+    String userMail = "";
+    String name = "";
+
+    String[] sendspace = new String[]{"","","",""};
 
     private DeviceListener mListener = new AbstractDeviceListener() {
         @Override
@@ -107,6 +133,19 @@ public class MainActivity extends ActionBarActivity {
         txtphoneNo = (EditText) findViewById(R.id.editTextPhoneNo);
         txtMessage = (EditText) findViewById(R.id.editTextSMS);
 
+        etName = (EditText) findViewById(R.id.name);
+        etEmail = (EditText) findViewById(R.id.email);
+        etUser = (EditText) findViewById(R.id.user);
+        etPass = (EditText) findViewById(R.id.pass);
+
+        //LOAD INTENT DATA
+        try {
+            openFile("data");
+        }
+        catch(Exception e) {
+            //file not found? RIP
+        }
+
         sendBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 sendSMSMessage();
@@ -151,6 +190,78 @@ public class MainActivity extends ActionBarActivity {
         Hub.getInstance().attachToAdjacentMyo();
     }
 
+    @Override
+    protected void onStop(){
+        try {
+            if(!etName.getText().toString().isEmpty())
+                sendspace[0] = etName.getText().toString();
+            if(!etEmail.getText().toString().isEmpty())
+                sendspace[1] = etEmail.getText().toString();
+            if(!etUser.getText().toString().isEmpty())
+                sendspace[2] = etUser.getText().toString();
+            if(!etPass.getText().toString().isEmpty())
+                sendspace[3] = etPass.getText().toString();
+
+            FileOutputStream output = getApplicationContext().openFileOutput("data", Context.MODE_PRIVATE);
+            writeJsonStream(output, sendspace);
+            output.close();
+        }
+        catch(Exception e){
+        }
+
+        super.onStop();
+    }
+
+    public void openFile(String fileName) throws java.io.IOException{
+        //InputStream input = getAssets().open(fileName);
+        InputStream input = openFileInput(fileName);
+        readJsonStream(input);
+        input.close();
+    }
+
+    public void readJsonStream(InputStream in) throws IOException {
+        JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+        reader.beginArray();
+        Gson gs = new Gson();
+        int i = 0;
+        while (reader.hasNext()) {
+            String recip = gs.fromJson(reader, String.class);
+            sendspace[i] = recip;
+            if(i == 0 && recip != "")
+                etName.setText(recip);
+            else if(i ==1 && recip != "")
+                etEmail.setText(recip);
+            else if(i ==2 && recip != "")
+                etUser.setText(recip);
+            else if(i ==3 && recip != "")
+                etPass.setText(recip);
+            i++;
+        }
+        reader.endArray();
+        reader.close();
+        return;
+    }
+
+    public void writeJsonStream(OutputStream out, String[] sndspc) throws IOException {
+        Gson gs = new Gson();
+        JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
+        writer.setIndent("  ");
+        writer.beginArray();
+        for (String message : sndspc) {
+            gs.toJson(message, String.class, writer);
+        }
+        writer.endArray();
+        writer.close();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        Hub.getInstance().removeListener(mListener);
+        Hub.getInstance().shutdown();
+    }
+
     public void decodeCoordinates(String url)
     {
         // Instantiate the cache
@@ -171,7 +282,6 @@ public class MainActivity extends ActionBarActivity {
                         String[] x = response.split(",");
 
                         String address = x[37]+x[38]+x[39]+x[40]+x[41];
-                        txtphoneNo.setText(""+address.substring(31));
                     }
                 },
                 new Response.ErrorListener() {
@@ -198,7 +308,46 @@ public class MainActivity extends ActionBarActivity {
         Log.i("Send SMS", "");
 
         String phoneNo = txtphoneNo.getText().toString();
+
         String message = txtMessage.getText().toString();
+
+        List<String> l = new ArrayList<String>();
+        l = Arrays.asList(message.split("\\s+"));
+
+        username = etUser.getText().toString();
+        pass = etPass.getText().toString();
+        name = etName.getText().toString();
+        userMail = etEmail.getText().toString();
+
+
+        if(l.get(0).toLowerCase().equals("email")) {
+            String str = "";
+            int count = 0;
+            if (!username.equals("")) {
+                str = str + username + " ";
+                count++;
+            }
+            if (!pass.equals("")) {
+                str = str + pass + " ";
+                count++;
+            }
+            if (!name.equals("")) {
+                str = str + name + " ";
+                count++;
+            }
+            if (!userMail.equals("")) {
+                str = str + userMail;
+                count++;
+            }
+
+            Toast.makeText(getApplicationContext(), ""+count,
+                    Toast.LENGTH_LONG).show();
+
+            if(count==4)
+                message = "email " + str + message;
+            else
+                message = "";
+        }
 
         try {
             SmsManager smsManager = SmsManager.getDefault();
