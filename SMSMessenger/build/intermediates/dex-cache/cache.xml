@@ -2,60 +2,74 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\davidhong12\AndroidStudioProjects\SMSMessenger\app\build\intermediates\exploded-aar\SMSMessenger\volley\unspecified\classes.jar"
+        jar="C:\Users\davidhong12\AndroidStudioProjects\SMS-App\SMSMessenger\app\build\intermediates\exploded-aar\SMSMessenger\volley\unspecified\classes.jar"
         jumboMode="false"
-        revision="21.1.2"
-        sha1="9df6acf55713bb5d3d232a8257bc754da45a4523">
-        <dex dex="C:\Users\davidhong12\AndroidStudioProjects\SMSMessenger\app\build\intermediates\pre-dexed\debug\classes-18b591cc0273cfbc6ff259d00a47c84a44e533fb.jar" />
+        revision="19.1.0"
+        sha1="e770193410dbc42d0d23db2e8181b26c7612c6fe">
+        <dex dex="C:\Users\davidhong12\AndroidStudioProjects\SMS-App\SMSMessenger\app\build\intermediates\pre-dexed\debug\classes-29aa0dbd389ea9551edfb267bf4546545404d3da.jar" />
     </item>
     <item
-        jar="C:\Users\davidhong12\AndroidStudioProjects\SMSMessenger\app\build\intermediates\exploded-aar\com.thalmic\myosdk\0.10.0\libs\native-libs.jar"
+        jar="C:\Users\davidhong12\AndroidStudioProjects\SMS-App\SMSMessenger\app\build\intermediates\exploded-aar\com.thalmic\myosdk\0.10.0\libs\native-libs.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="d24ac9790966ffbd1bd9d921a262572c94903027">
-        <dex dex="C:\Users\davidhong12\AndroidStudioProjects\SMSMessenger\app\build\intermediates\pre-dexed\debug\native-libs-fb562870ea7eac0026a52a386b4ba282d42445ce.jar" />
+        <dex dex="C:\Users\davidhong12\AndroidStudioProjects\SMS-App\SMSMessenger\app\build\intermediates\pre-dexed\debug\native-libs-d0b4715b4de615a699b39b3c03c3010272b0ad04.jar" />
     </item>
     <item
-        jar="C:\Users\davidhong12\AndroidStudioProjects\SMSMessenger\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
+        jar="C:\Users\davidhong12\AndroidStudioProjects\SMS-App\SMSMessenger\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.1.0\classes.jar"
         jumboMode="false"
-        revision="21.1.2"
-        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="C:\Users\davidhong12\AndroidStudioProjects\SMSMessenger\app\build\intermediates\pre-dexed\debug\classes-9efdfe596481e3fd673212400fd8008bdeced67c.jar" />
+        revision="19.1.0"
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28">
+        <dex dex="C:\Users\davidhong12\AndroidStudioProjects\SMS-App\SMSMessenger\app\build\intermediates\pre-dexed\debug\classes-b90b32af05f7d85b0bc2f38d6c2ec8c934436a83.jar" />
     </item>
     <item
-        jar="C:\Users\davidhong12\AndroidStudioProjects\SMSMessenger\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
+        jar="C:\Users\davidhong12\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.2.4\a60a5e993c98c864010053cb901b7eab25306568\gson-2.2.4.jar"
         jumboMode="false"
-        revision="21.1.2"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="C:\Users\davidhong12\AndroidStudioProjects\SMSMessenger\app\build\intermediates\pre-dexed\debug\classes-501dffbd5e083465c3bd9af9e5c6581907a56c0d.jar" />
+        revision="19.1.0"
+        sha1="a60a5e993c98c864010053cb901b7eab25306568">
+        <dex dex="C:\Users\davidhong12\AndroidStudioProjects\SMS-App\SMSMessenger\app\build\intermediates\pre-dexed\debug\gson-2.2.4-25a2bfacaa7d44406977c0b901a7fd073ad23ab7.jar" />
     </item>
     <item
         jar="C:\Users\davidhong12\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.2.4\a60a5e993c98c864010053cb901b7eab25306568\gson-2.2.4.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="a60a5e993c98c864010053cb901b7eab25306568">
-        <dex dex="C:\Users\davidhong12\AndroidStudioProjects\SMSMessenger\app\build\intermediates\pre-dexed\debug\gson-2.2.4-25a2bfacaa7d44406977c0b901a7fd073ad23ab7.jar" />
+        <dex dex="C:\Users\davidhong12\AndroidStudioProjects\SMS-App\SMSMessenger\app\build\intermediates\pre-dexed\debug\gson-2.2.4-25a2bfacaa7d44406977c0b901a7fd073ad23ab7.jar" />
     </item>
     <item
-        jar="C:\Users\davidhong12\AndroidStudioProjects\SMSMessenger\app\build\intermediates\exploded-aar\com.thalmic\myosdk\0.10.0\classes.jar"
+        jar="C:\Users\davidhong12\sdk\extras\android\m2repository\com\android\support\support-v4\19.1.0\support-v4-19.1.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67">
+        <dex dex="C:\Users\davidhong12\AndroidStudioProjects\SMS-App\SMSMessenger\app\build\intermediates\pre-dexed\debug\support-v4-19.1.0-a1aa578e5c6e3b960ba7c5582caa03a27b723799.jar" />
+    </item>
+    <item
+        jar="C:\Users\davidhong12\AndroidStudioProjects\SMS-App\SMSMessenger\app\build\intermediates\exploded-aar\com.thalmic\myosdk\0.10.0\libs\native-libs.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="d24ac9790966ffbd1bd9d921a262572c94903027">
+        <dex dex="C:\Users\davidhong12\AndroidStudioProjects\SMS-App\SMSMessenger\app\build\intermediates\pre-dexed\debug\native-libs-d0b4715b4de615a699b39b3c03c3010272b0ad04.jar" />
+    </item>
+    <item
+        jar="C:\Users\davidhong12\AndroidStudioProjects\SMS-App\SMSMessenger\app\build\intermediates\exploded-aar\com.thalmic\myosdk\0.10.0\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="d189db75174a41996c33bb243d2228aacf10fa53">
-        <dex dex="C:\Users\davidhong12\AndroidStudioProjects\SMSMessenger\app\build\intermediates\pre-dexed\debug\classes-c44c9065f3cbda4de391775abd8d157d8e807da5.jar" />
+        <dex dex="C:\Users\davidhong12\AndroidStudioProjects\SMS-App\SMSMessenger\app\build\intermediates\pre-dexed\debug\classes-b7011822c79a1865f0722ee689effa9467c4059b.jar" />
     </item>
     <item
-        jar="C:\Users\davidhong12\AndroidStudioProjects\SMSMessenger\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
+        jar="C:\Users\davidhong12\AndroidStudioProjects\SMS-App\SMSMessenger\app\build\intermediates\exploded-aar\SMSMessenger\volley\unspecified\classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="C:\Users\davidhong12\AndroidStudioProjects\SMSMessenger\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-fd431ada509390d55ca73fb1db8b2c3e1ea93097.jar" />
+        sha1="e770193410dbc42d0d23db2e8181b26c7612c6fe">
+        <dex dex="C:\Users\davidhong12\AndroidStudioProjects\SMS-App\SMSMessenger\app\build\intermediates\pre-dexed\debug\classes-29aa0dbd389ea9551edfb267bf4546545404d3da.jar" />
     </item>
     <item
-        jar="C:\Users\davidhong12\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jar="C:\Users\davidhong12\AndroidStudioProjects\SMS-App\SMSMessenger\app\build\intermediates\exploded-aar\com.thalmic\myosdk\0.10.0\classes.jar"
         jumboMode="false"
-        revision="21.1.2"
-        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="C:\Users\davidhong12\AndroidStudioProjects\SMSMessenger\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-89953b1bd7852b1bdd5bb8174e39186e0e829ee3.jar" />
+        revision="19.1.0"
+        sha1="d189db75174a41996c33bb243d2228aacf10fa53">
+        <dex dex="C:\Users\davidhong12\AndroidStudioProjects\SMS-App\SMSMessenger\app\build\intermediates\pre-dexed\debug\classes-b7011822c79a1865f0722ee689effa9467c4059b.jar" />
     </item>
 
 </items>

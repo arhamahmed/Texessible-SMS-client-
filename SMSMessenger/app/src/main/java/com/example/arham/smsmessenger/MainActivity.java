@@ -2,6 +2,9 @@ package com.example.arham.smsmessenger;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Cache;
@@ -68,6 +72,8 @@ public class MainActivity extends ActionBarActivity {
     String userMail = "";
     String name = "";
 
+    int currArticle = -1;
+
     String[] sendspace = new String[]{"","","",""};
 
     private DeviceListener mListener = new AbstractDeviceListener() {
@@ -98,16 +104,49 @@ public class MainActivity extends ActionBarActivity {
                     showToast("Double Tap");
                     break;
                 case FIST:
-                    volumeMode = true;
+                    //record
+                    volumeMode = false;
                     showToast("Fist");
+                    break;
+                case WAVE_IN:
+                    volumeMode = false;
+                    if(currArticle != 0) {
+                        currArticle--;
+                        try {
+                            SmsManager smsManager = SmsManager.getDefault();
+                            smsManager.sendTextMessage("+18737000071", null, "news " + currArticle, null, null);
+                            Toast.makeText(getApplicationContext(), "SMS sent. in",
+                                    Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(),
+                                    "SMS faild, please try again.",
+                                    Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                        }
+                    }
                     break;
                 case WAVE_OUT:
                     volumeMode = false;
-                    showToast("Wave Out");
+                    if(currArticle != 10) {
+                        currArticle++;
+                        try {
+                            SmsManager smsManager = SmsManager.getDefault();
+                            smsManager.sendTextMessage("+18737000071", null, "news " + currArticle, null, null);
+                            Toast.makeText(getApplicationContext(), "SMS sent. out",
+                                    Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(),
+                                    "SMS faild, please try again.",
+                                    Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                        }
+                    }
                     break;
                 case FINGERS_SPREAD:
+                    //SEND THIS SHIT
                     volumeMode = false;
                     showToast("Spread Fingers");
+                    sendSMSMessage();
                     break;
             }
             if (pose != Pose.UNKNOWN && pose != Pose.REST) {
@@ -311,7 +350,7 @@ public class MainActivity extends ActionBarActivity {
 
         String message = txtMessage.getText().toString();
 
-        List<String> l = new ArrayList<String>();
+        List<String> l;
         l = Arrays.asList(message.split("\\s+"));
 
         username = etUser.getText().toString();
@@ -319,10 +358,13 @@ public class MainActivity extends ActionBarActivity {
         name = etName.getText().toString();
         userMail = etEmail.getText().toString();
 
+        if(l.get(0).toLowerCase().equals("news") && Integer.parseInt(l.get(1)) <= 10)
+            currArticle = Integer.parseInt(l.get(1));
 
+
+        int count = 0;
         if(l.get(0).toLowerCase().equals("email")) {
             String str = "";
-            int count = 0;
             if (!username.equals("")) {
                 str = str + username + " ";
                 count++;
@@ -340,11 +382,8 @@ public class MainActivity extends ActionBarActivity {
                 count++;
             }
 
-            Toast.makeText(getApplicationContext(), ""+count,
-                    Toast.LENGTH_LONG).show();
-
             if(count==4)
-                message = "email " + str + message;
+                message = " email " + str + message;
             else
                 message = "";
         }

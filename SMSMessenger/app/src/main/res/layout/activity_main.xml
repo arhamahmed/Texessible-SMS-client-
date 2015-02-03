@@ -1,40 +1,30 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/textViewPhoneNo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/phone_label" />
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:padding="20dp">
 
     <EditText
         android:id="@+id/editTextPhoneNo"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="phone"/>
+        android:layout_height="50dp"
+        android:textSize="18dp"
+        android:inputType="phone"
+        android:hint="To:"/>
 
     <TextView
-        android:id="@+id/textViewMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sms_label" />
-
-    <EditText
-        android:id="@+id/editTextSMS"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine"/>
-
-    <Button
-        android:id="@+id/btnSendSMS"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:text="@string/send_sms_label"/>
-
+        android:text="SendGrid Account (to send emails)"
+        android:textSize="18dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
+        </TextView>
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -71,4 +61,54 @@
             android:hint="Password"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:gravity="bottom"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp">
+        <EditText
+            android:id="@+id/editTextSMS"
+            android:minHeight="70dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:hint="Message"/>
+
+        <Button
+            android:id="@+id/btnSendSMS"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="#0072bc"
+            android:layout_width="fill_parent"
+            android:textColor="#ffffff"
+            android:layout_height="50dp"
+            android:text="Send"/>
+     </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent">
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Available offline and online text commands"
+            android:layout_marginTop="20dp"
+            android:textSize="16dp">
+        </TextView>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="email to $email@com$ re: 'subject' body \ndirections City Country to Street , State Country\nWeather City, Province/Country\nnews\nnews $integer$"
+            android:layout_marginTop="20dp">
+        </TextView>
+
+    </LinearLayout>
+
 </LinearLayout>
+    </ScrollView>
