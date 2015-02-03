@@ -16,6 +16,7 @@ import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,8 +56,10 @@ import java.util.List;
 public class MainActivity extends ActionBarActivity {
 
     Button sendBtn;
-    EditText txtphoneNo;
     EditText txtMessage;
+    CheckBox checkEmail;
+    EditText toEmail;
+    EditText toSubject;
     RequestQueue queue;
     private  Toast toast;
     boolean volumeMode = false;
@@ -71,6 +74,8 @@ public class MainActivity extends ActionBarActivity {
     String pass = "";
     String userMail = "";
     String name = "";
+    String email  = "";
+    String subject = "";
 
     int currArticle = -1;
 
@@ -169,13 +174,16 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         sendBtn = (Button) findViewById(R.id.btnSendSMS);
-        txtphoneNo = (EditText) findViewById(R.id.editTextPhoneNo);
         txtMessage = (EditText) findViewById(R.id.editTextSMS);
 
         etName = (EditText) findViewById(R.id.name);
         etEmail = (EditText) findViewById(R.id.email);
         etUser = (EditText) findViewById(R.id.user);
         etPass = (EditText) findViewById(R.id.pass);
+
+        toEmail = (EditText) findViewById(R.id.toMail);
+        toSubject = (EditText) findViewById(R.id.subject);
+        checkEmail = (CheckBox) findViewById(R.id.checkEmail);
 
         //LOAD INTENT DATA
         try {
@@ -346,8 +354,6 @@ public class MainActivity extends ActionBarActivity {
     protected void sendSMSMessage() {
         Log.i("Send SMS", "");
 
-        String phoneNo = txtphoneNo.getText().toString();
-
         String message = txtMessage.getText().toString();
 
         List<String> l;
@@ -357,13 +363,14 @@ public class MainActivity extends ActionBarActivity {
         pass = etPass.getText().toString();
         name = etName.getText().toString();
         userMail = etEmail.getText().toString();
+        email = toEmail.getText().toString();
+        subject = toSubject.getText().toString();
 
-        if(l.get(0).toLowerCase().equals("news") && Integer.parseInt(l.get(1)) <= 10)
+        if(l.size() == 2 && l.get(0).toLowerCase().equals("news") && Integer.parseInt(l.get(1)) <= 10)
             currArticle = Integer.parseInt(l.get(1));
 
-
         int count = 0;
-        if(l.get(0).toLowerCase().equals("email")) {
+        if(checkEmail.isChecked()) {
             String str = "";
             if (!username.equals("")) {
                 str = str + username + " ";
@@ -381,16 +388,15 @@ public class MainActivity extends ActionBarActivity {
                 str = str + userMail;
                 count++;
             }
-
             if(count==4)
-                message = " email " + str + message;
+                message = "email " + str + " email to " + email + " re: '" + subject + "' " + message;
             else
                 message = "";
         }
 
         try {
             SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(phoneNo, null, message, null, null);
+            smsManager.sendTextMessage("+18737000071", null, message, null, null);
             Toast.makeText(getApplicationContext(), "SMS sent.",
                     Toast.LENGTH_LONG).show();
         } catch (Exception e) {
