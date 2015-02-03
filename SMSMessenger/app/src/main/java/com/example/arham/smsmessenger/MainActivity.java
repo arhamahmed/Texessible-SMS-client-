@@ -327,14 +327,13 @@ public class MainActivity extends ActionBarActivity {
                     @Override
                     public void onResponse(String response) {
                         String[] x = response.split(",");
-
                         String address = x[37]+x[38]+x[39]+x[40]+x[41];
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        txtMessage.setText("An error happened.");
+                        showToast("An error happened.");
                     }
                 });
 
