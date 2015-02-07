@@ -1,0 +1,8 @@
+[run]
+source = hackpack 
+[report]
+omit =
+    */python?.?/*
+    */site-packages/nose/*
+exclude_lines =
+    if __name__ == .__main__.:
