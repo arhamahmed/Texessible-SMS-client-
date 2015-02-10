@@ -7,5 +7,11 @@
     <string name="phone_label">Enter Phone Number:</string>
     <string name="sms_label">Enter SMS Message:</string>
     <string name="send_sms_label">Send SMS</string>
+    <string-array name="actions">
+        <item>Directions</item>
+        <item>Email</item>
+        <item>News</item>
+        <item>Weather</item>
+    </string-array>
 
 </resources>
